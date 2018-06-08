@@ -18,8 +18,4 @@ let increaseCredit condition customer =
 
 let increaseCreditUsingVip = increaseCredit (fun c-> c.IsVip)
 
-let upgradeCustomer customer = 
-    customer 
-    |> getPurchases 
-    |> tryPromoteToVip 
-    |> increaseCreditUsingVip
+let upgradeCustomer = getPurchases >> tryPromoteToVip >> increaseCreditUsingVip
