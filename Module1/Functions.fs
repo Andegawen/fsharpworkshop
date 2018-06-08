@@ -1,6 +1,7 @@
 module Functions
 
 open Types
+open System
 
 let tryPromoteToVip purchases = 
     let customer, amount = purchases
@@ -19,3 +20,8 @@ let increaseCredit condition customer =
 let increaseCreditUsingVip = increaseCredit (fun c-> c.IsVip)
 
 let upgradeCustomer = getPurchases >> tryPromoteToVip >> increaseCreditUsingVip
+
+let isAdult customer =
+    match customer.PersonalDetails with
+    | None -> false
+    | Some c -> c.DOB.AddYears 18 <= DateTime.Now.Date

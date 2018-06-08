@@ -74,35 +74,36 @@ open System
 
 
 
-let customer = {
-    Id = 1
-    IsVip = false
-    Credit = 0M<USD>
-    PersonalDetails = Some {
-        FirstName = "John"
-        LastName = "Doe"
-        DOB = DateTime(1970, 11, 23) }
-    Notifications = ReceiveNotifications(receiveDeals = true,
-                                         receiveAlerts = true)
-}
+let createCustomer = fun () -> {
+                    Id = 1
+                    IsVip = false
+                    Credit = 0M<USD>
+                    PersonalDetails = Some {
+                        FirstName = "John"
+                        LastName = "Doe"
+                        DOB = DateTime(1970, 11, 23) }
+                    Notifications = ReceiveNotifications(receiveDeals = true, receiveAlerts = true)
+                    }
 
 [<Fact>]
 let ``3-1 Create customer``() =
+    let customer = createCustomer()
     test <@ customer.GetType() = typeof<Customer> @>
 
 [<Fact>]
 let ``3-2 Increase credit using USD``() =
-    let upgradedCustomer = increaseCreditUsingVip customer
+    let upgradedCustomer = increaseCreditUsingVip (createCustomer())
     test <@ upgradedCustomer.Credit = 50M<USD> @>
 //
-//[<Fact>]
-//let ``3-3 Adult customer``() =
-//    test <@ customer |> isAdult @>
-//
-//[<Fact>]
-//let ``3-4 Non-adult customer``() =
-//    let nonadult = { customer with PersonalDetails = Some { customer.PersonalDetails.Value with DateOfBirth = DateTime.Now.AddYears(-1) } }
-//    test <@ not (nonadult |> isAdult) @>
+[<Fact>]
+let ``3-3 Adult customer``() =
+    test <@ createCustomer() |> isAdult @>
+
+[<Fact>]
+let ``3-4 Non-adult customer``() =
+    let personalDetails = Some { FirstName = "x"; LastName = "y"; DOB = DateTime.Now }
+    let nonadult = { createCustomer() with PersonalDetails = personalDetails }
+    test <@ not (nonadult |> isAdult) @>
 //
 //[<Fact>]
 //let ``3-5 Customer without personal details``() =
