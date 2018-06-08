@@ -10,3 +10,5 @@ let vipCustomer = tryPromoteToVip purchases
 
 let customerWithMoreCredit = increaseCreditUsingVip customer
 
+let z = upgradeCustomer customer
+

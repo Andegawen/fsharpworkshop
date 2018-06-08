@@ -17,3 +17,9 @@ let increaseCredit condition customer =
     else {customer with Credit = customer.Credit + 50M}
 
 let increaseCreditUsingVip = increaseCredit (fun c-> c.IsVip)
+
+let upgradeCustomer customer =
+    let customerWithPurchases = getPurchases customer
+    let promotedCustomer = tryPromoteToVip customerWithPurchases
+    let upgradedCustomer = increaseCreditUsingVip promotedCustomer
+    upgradedCustomer
