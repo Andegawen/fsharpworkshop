@@ -1,6 +1,24 @@
 module Types
-    type Customer = {
-        Id: int
-        IsVip:bool
-        Credit: decimal
-    }
+
+open System
+
+type PersonalDetails = {
+    FirstName:string
+    LastName:string
+    DOB: DateTime
+}
+
+[<Measure>] type EUR
+[<Measure>] type USD
+
+type Notifications =
+    | NonNotifications
+    | ReceiveNotifications of receiveDeals : bool*receiveAlerts:bool
+
+type Customer = {
+    Id: int
+    IsVip:bool
+    Credit: decimal<USD>
+    PersonalDetails: PersonalDetails option
+    Notifications: Notifications
+}
