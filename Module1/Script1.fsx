@@ -8,7 +8,7 @@ let customer = { Id = 1
                  IsVip = false
                  Credit = 10M<USD>
                  PersonalDetails = None
-                 Notifications = NonNotifications}
+                 Notifications = NoNotifications}
 
 let purchases = (customer, 101M)
 let vipCustomer = tryPromoteToVip purchases

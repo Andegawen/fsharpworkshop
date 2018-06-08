@@ -75,15 +75,15 @@ open System
 
 
 let createCustomer = fun () -> {
-                    Id = 1
-                    IsVip = false
-                    Credit = 0M<USD>
-                    PersonalDetails = Some {
-                        FirstName = "John"
-                        LastName = "Doe"
-                        DOB = DateTime(1970, 11, 23) }
-                    Notifications = ReceiveNotifications(receiveDeals = true, receiveAlerts = true)
-                    }
+                                Id = 1
+                                IsVip = false
+                                Credit = 0M<USD>
+                                PersonalDetails = Some {
+                                    FirstName = "John"
+                                    LastName = "Doe"
+                                    DOB = DateTime(1970, 11, 23) }
+                                Notifications = ReceiveNotifications(receiveDeals = true, receiveAlerts = true)
+                                }
 
 [<Fact>]
 let ``3-1 Create customer``() =
@@ -94,7 +94,7 @@ let ``3-1 Create customer``() =
 let ``3-2 Increase credit using USD``() =
     let upgradedCustomer = increaseCreditUsingVip (createCustomer())
     test <@ upgradedCustomer.Credit = 50M<USD> @>
-//
+
 [<Fact>]
 let ``3-3 Adult customer``() =
     test <@ createCustomer() |> isAdult @>
@@ -104,18 +104,18 @@ let ``3-4 Non-adult customer``() =
     let personalDetails = Some { FirstName = "x"; LastName = "y"; DOB = DateTime.Now }
     let nonadult = { createCustomer() with PersonalDetails = personalDetails }
     test <@ not (nonadult |> isAdult) @>
-//
-//[<Fact>]
-//let ``3-5 Customer without personal details``() =
-//    let nonadult = { customer with PersonalDetails = None }
-//    test <@ not (nonadult |> isAdult) @>
-//
-//[<Fact>]
-//let ``3-6 Get alert when nofications are enabled``() =
-//    let alert = customer |> getAlert
-//    test <@ alert = "Alert for customer 1" @>
-//
-//[<Fact>]
-//let ``3-7 Do not get alert when nofications are disabled``() =
-//    let alert = { customer with Notifications = NoNotifications } |> getAlert
-//    test <@ alert = "" @>
+
+[<Fact>]
+let ``3-5 Customer without personal details``() =
+    let nonadult = { createCustomer() with PersonalDetails = None }
+    test <@ not (nonadult |> isAdult) @>
+
+[<Fact>]
+let ``3-6 Get alert when nofications are enabled``() =
+    let alert = createCustomer() |> getAlert
+    test <@ alert = "Alert for customer 1" @>
+
+[<Fact>]
+let ``3-7 Do not get alert when nofications are disabled``() =
+    let alert = { createCustomer() with Notifications = NoNotifications } |> getAlert
+    test <@ alert = "" @>

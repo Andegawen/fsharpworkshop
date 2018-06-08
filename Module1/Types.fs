@@ -12,7 +12,7 @@ type PersonalDetails = {
 [<Measure>] type USD
 
 type Notifications =
-    | NonNotifications
+    | NoNotifications
     | ReceiveNotifications of receiveDeals : bool*receiveAlerts:bool
 
 type Customer = {

@@ -25,3 +25,9 @@ let isAdult customer =
     match customer.PersonalDetails with
     | None -> false
     | Some c -> c.DOB.AddYears 18 <= DateTime.Now.Date
+
+let getAlert (customer:Customer) =
+    match customer.Notifications with
+    | ReceiveNotifications(receiveAlerts = true) ->
+        sprintf "Alert for customer %i" customer.Id
+    | _ -> ""
