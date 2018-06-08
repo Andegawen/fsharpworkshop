@@ -119,3 +119,36 @@ let ``3-6 Get alert when nofications are enabled``() =
 let ``3-7 Do not get alert when nofications are disabled``() =
     let alert = { createCustomer() with Notifications = NoNotifications } |> getAlert
     test <@ alert = "" @>
+
+
+let createCustomer4 = 
+    fun () -> {
+                Id = 1
+                IsVip = false
+                Credit = 0M<USD>
+                PersonalDetails = Some {
+                    FirstName = "John"
+                    LastName = "Doe"
+                    DOB = DateTime(1970, 11, 23) }
+                Notifications = ReceiveNotifications(receiveDeals = true,
+                                                        receiveAlerts = true) }
+
+
+[<Fact>]
+let ``4-1 Get purchases average``() =
+    let purchases = getPurchases (createCustomer4())
+    test <@ purchases = (createCustomer4(), 60M) @>
+//
+//[<Fact>]
+//let ``4-2 Upgrade customer``() =
+//    let service = CustomerService()
+//    let upgradedCustomer = service.UpgradeCustomer 2
+//    test <@ upgradedCustomer.IsVip @>
+//    test <@ upgradedCustomer.Credit = 110M<USD> @>
+//
+//[<Fact>]
+//let ``4-3 Get customer info``() =
+//    let service = CustomerService()
+//    let info = service.GetCustomerInfo customer
+//    let expectedInfo = "Id: 1, IsVip: false, Credit: 0.00, IsAdult: true, Alert: Alert for customer 1"
+//    test <@ info = expectedInfo @>

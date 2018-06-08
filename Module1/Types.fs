@@ -13,7 +13,7 @@ type PersonalDetails = {
 
 type Notifications =
     | NoNotifications
-    | ReceiveNotifications of receiveDeals : bool*receiveAlerts:bool
+    | ReceiveNotifications of receiveDeals : bool * receiveAlerts:bool
 
 type Customer = {
     Id: int
